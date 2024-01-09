@@ -32,18 +32,19 @@
  ****************************************************************************/
 
 /**
- * @file ActuatorEffectivenessTiltingMultirotor.hpp
+ * @file ActuatorEffectivenessThrustVectoringQuadrotor.hpp
  *
  * Actuator effectiveness computed from rotors position and orientation
  *
- * @author Salvatore Marcellini <salvatore.marcellini@gmail.com>
+ * @author Jann Cristobal <jcristobal@torontomu.ca>
+ * The reference code was from Salvatore Marcellini <salvatore.marcellini@gmail.com>
  */
 
-#include "ActuatorEffectivenessTiltingMultirotor.hpp"
+#include "ActuatorEffectivenessThrustVectoringQuadrotor.hpp"
 
 using namespace matrix;
 
-ActuatorEffectivenessTiltingMultirotor::ActuatorEffectivenessTiltingMultirotor(ModuleParams *parent)
+ActuatorEffectivenessThrustVectoringQuadrotor::ActuatorEffectivenessThrustVectoringQuadrotor(ModuleParams *parent)
 	: ModuleParams(parent)
 {
 
@@ -61,7 +62,7 @@ ActuatorEffectivenessTiltingMultirotor::ActuatorEffectivenessTiltingMultirotor(M
 	_tilts = new ActuatorEffectivenessTilts(this);
 }
 
-void ActuatorEffectivenessTiltingMultirotor::updateParams()
+void ActuatorEffectivenessThrustVectoringQuadrotor::updateParams()
 {
 	ModuleParams::updateParams();
 
@@ -103,7 +104,7 @@ void ActuatorEffectivenessTiltingMultirotor::updateParams()
 }
 
 bool
-ActuatorEffectivenessTiltingMultirotor::getEffectivenessMatrix(Configuration &configuration,
+ActuatorEffectivenessThrustVectoringQuadrotor::getEffectivenessMatrix(Configuration &configuration,
 		EffectivenessUpdateReason external_update)
 {
 	if (external_update == EffectivenessUpdateReason::NO_EXTERNAL_UPDATE) {
@@ -158,7 +159,7 @@ ActuatorEffectivenessTiltingMultirotor::getEffectivenessMatrix(Configuration &co
 }
 
 void
-ActuatorEffectivenessTiltingMultirotor::updateSetpoint(const matrix::Vector<float, NUM_AXES> &control_sp, int matrix_index,
+ActuatorEffectivenessThrustVectoringQuadrotor::updateSetpoint(const matrix::Vector<float, NUM_AXES> &control_sp, int matrix_index,
 			    ActuatorVector &actuator_sp){
 
 	actuator_controls_s actuator_controls_0;

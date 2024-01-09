@@ -35,28 +35,28 @@ param set-default CA_TILTING_TYPE 1 #Omnidirectional tilting drone
 # Set all 8 channels
 set PWM_OUT 1234
 set PWM_AUX_OUT 1234
-param set-default CA_ROTOR_COUNT 8
+param set-default CA_ROTOR_COUNT 4
 param set-default CA_SV_TL_COUNT 4
 
-param set-default CA_ROTOR0_PX 0.35 #M1 CW
-param set-default CA_ROTOR0_PY 0.35
+param set-default CA_ROTOR0_PX 0.177 #M1 CCW
+param set-default CA_ROTOR0_PY 0.177
 param set-default CA_ROTOR0_PZ 0.05
-param set-default CA_ROTOR0_KM -0.05
+param set-default CA_ROTOR0_KM -0.1
 
-param set-default CA_ROTOR1_PX -0.35 #M2 CCW
-param set-default CA_ROTOR1_PY 0.35
+param set-default CA_ROTOR1_PX -0.177 #M2 CCW
+param set-default CA_ROTOR1_PY -0.177
 param set-default CA_ROTOR1_PZ 0.05
-param set-default CA_ROTOR1_KM 0.05
+param set-default CA_ROTOR1_KM -0.1
 
-param set-default CA_ROTOR2_PX -0.35  #M3 CW
-param set-default CA_ROTOR2_PY -0.35
+param set-default CA_ROTOR2_PX 0.177  #M3 CW
+param set-default CA_ROTOR2_PY -0.177
 param set-default CA_ROTOR2_PZ 0.05
-param set-default CA_ROTOR2_KM -0.05
+param set-default CA_ROTOR2_KM 0.1
 
-param set-default CA_ROTOR3_PX 0.35 #M4 CCW
-param set-default CA_ROTOR3_PY -0.35
+param set-default CA_ROTOR3_PX -0.177 #M4 CW
+param set-default CA_ROTOR3_PY 0.177
 param set-default CA_ROTOR3_PZ 0.05
-param set-default CA_ROTOR3_KM 0.05
+param set-default CA_ROTOR3_KM 0.1
 
 
 
