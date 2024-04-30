@@ -1,6 +1,6 @@
 __max_num_mc_motors: &max_num_mc_motors 8
 __max_num_servos: &max_num_servos 8
-__max_num_tilts: &max_num_tilts 4
+__max_num_tilts: &max_num_tilts 8 #AVL-JC
 
 module_name: Control Allocation
 
@@ -29,6 +29,7 @@ parameters:
                 9: Custom
                 #*** CUSTOM
                 11: Tilting Multirotor
+                12: Thrust Vectoring #AVL-JC
                 #*** END-CUSTOM
             default: 0
 
@@ -328,6 +329,10 @@ parameters:
                 2: '2'
                 3: '3'
                 4: '4'
+                5: '5' #AVL-JC
+                6: '6'
+                7: '7'
+                8: '8'
             default: 0
         CA_SV_TL${i}_CT:
             description:
@@ -443,7 +448,6 @@ parameters:
             instance_start: 0
             default: 0
         # *** END-CUSTOM ***
-
 
 # Mixer
 mixer:
@@ -836,6 +840,42 @@ mixer:
             # *** CUSTOM ***
             11: #Tilting Multirotor
                 title: 'Tilting Multirotor'
+                actuators:
+                  - actuator_type: 'motor'
+                    group_label: 'Rotors'
+                    count: 'CA_ROTOR_COUNT'
+                    item_label_prefix: 'Rotor ${i}'
+                    per_item_parameters:
+                      standard:
+                        position: [ 'CA_ROTOR${i}_PX', 'CA_ROTOR${i}_PY', 'CA_ROTOR${i}_PZ' ]
+                      extra:
+                        - name: 'CA_ROTOR${i}_CT'
+                          label: "Thrust\nCoefficient"
+                        - name: 'CA_ROTOR${i}_KM'
+                          label: 'Direction CCW'
+                          function: 'spin-dir'
+                          show_as: 'true-if-positive'
+                        - name: 'CA_ROTOR${i}_TILT'
+                          label: 'Tilted by'
+                  - actuator_type: 'servo'
+                    group_label: 'Tilt Servos'
+                    count: 'CA_SV_TL_COUNT'
+                    item_label_prefix: 'Tilt ${i}'
+                    parameters:
+                        - name: 'CA_TILTING_TYPE'
+                          label: 'Tilting drone type'
+                    per_item_parameters:
+                      extra:
+                        - name: 'CA_SV_TL${i}_MINA'
+                          label: "Angle at Min\nTilt"
+                        - name: 'CA_SV_TL${i}_MAXA'
+                          label: "Angle at Max\nTilt"
+                        - name: 'CA_SV_TL${i}_TD'
+                          label: 'Tilt Direction'
+            # *** END-CUSTOM ***
+
+            12: #Thrust Vectoring Multirotor //AVL-JC
+                title: 'Thrust Vectoring Multirotor'
                 actuators:
                   - actuator_type: 'motor'
                     group_label: 'Rotors'

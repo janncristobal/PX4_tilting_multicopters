@@ -53,6 +53,7 @@
 #include <ActuatorEffectivenessCustom.hpp>
 /*** CUSTOM ***/
 #include <ActuatorEffectivenessTiltingMultirotor.hpp>
+#include <ActuatorEffectivenessThrustVectoringMultirotor.hpp>
 /*** END-CUSTOM ***/
 
 #include <ControlAllocation.hpp>
@@ -153,6 +154,7 @@ private:
 		CUSTOM = 9,
 		/*** CUSTOM ***/
 		TILTING_MULTIROTOR = 11,
+		THRUST_VECTORING_MULTIROTOR = 12, //AVL-JC
 		/*** END-CUSTOM ***/
 	};
 

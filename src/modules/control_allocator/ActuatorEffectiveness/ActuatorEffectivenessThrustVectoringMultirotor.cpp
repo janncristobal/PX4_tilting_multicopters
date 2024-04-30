@@ -32,7 +32,7 @@
  ****************************************************************************/
 
 /**
- * @file ActuatorEffectivenessThrustVectoringQuadrotor.hpp
+ * @file ActuatorEffectivenessThrustVectoringMultirotor.hpp
  *
  * Actuator effectiveness computed from rotors position and orientation
  *
@@ -40,11 +40,11 @@
  * The reference code was from Salvatore Marcellini <salvatore.marcellini@gmail.com>
  */
 
-#include "ActuatorEffectivenessThrustVectoringQuadrotor.hpp"
+#include "ActuatorEffectivenessThrustVectoringMultirotor.hpp"
 
 using namespace matrix;
 
-ActuatorEffectivenessThrustVectoringQuadrotor::ActuatorEffectivenessThrustVectoringQuadrotor(ModuleParams *parent)
+ActuatorEffectivenessThrustVectoringMultirotor::ActuatorEffectivenessThrustVectoringMultirotor(ModuleParams *parent)
 	: ModuleParams(parent)
 {
 
@@ -62,7 +62,7 @@ ActuatorEffectivenessThrustVectoringQuadrotor::ActuatorEffectivenessThrustVector
 	_tilts = new ActuatorEffectivenessTilts(this);
 }
 
-void ActuatorEffectivenessThrustVectoringQuadrotor::updateParams()
+void ActuatorEffectivenessThrustVectoringMultirotor::updateParams()
 {
 	ModuleParams::updateParams();
 
@@ -91,6 +91,7 @@ void ActuatorEffectivenessThrustVectoringQuadrotor::updateParams()
 		_mc_rotors = new ActuatorEffectivenessRotors(this, ActuatorEffectivenessRotors::AxisConfiguration::FixedUpwards);
 		_mc_rotors_vertical = nullptr;
 		_mc_rotors_lateral = nullptr;
+		_mc_rotors_longitudinal = nullptr; //AVL-JC
 	}
 	else{ //Omnidirectional tilting
 
@@ -100,11 +101,13 @@ void ActuatorEffectivenessThrustVectoringQuadrotor::updateParams()
 
 		_mc_rotors_lateral = new ActuatorEffectivenessRotors(this, ActuatorEffectivenessRotors::AxisConfiguration::FixedUpwards,
 								      false, true);
+		_mc_rotors_longitudinal = new ActuatorEffectivenessRotors(this, ActuatorEffectivenessRotors::AxisConfiguration::FixedUpwards,
+								      false, true); //AVL-JC
 	}
 }
 
 bool
-ActuatorEffectivenessThrustVectoringQuadrotor::getEffectivenessMatrix(Configuration &configuration,
+ActuatorEffectivenessThrustVectoringMultirotor::getEffectivenessMatrix(Configuration &configuration,
 		EffectivenessUpdateReason external_update)
 {
 	if (external_update == EffectivenessUpdateReason::NO_EXTERNAL_UPDATE) {
@@ -143,7 +146,11 @@ ActuatorEffectivenessThrustVectoringQuadrotor::getEffectivenessMatrix(Configurat
 		configuration.selected_matrix = 1;
 		rotors_added_successfully = _mc_rotors_lateral->addActuators(configuration);
 
-		*configuration.num_actuators /=2;
+		// Longitudinal forces matrix AVL-JC
+		configuration.selected_matrix = 2;
+		rotors_added_successfully = _mc_rotors_longitudinal->addActuators(configuration);
+
+		*configuration.num_actuators /=3; //AVL-JC changed from 2 to 3
 
 		// Tilts
 		configuration.selected_matrix = 0;
@@ -159,7 +166,7 @@ ActuatorEffectivenessThrustVectoringQuadrotor::getEffectivenessMatrix(Configurat
 }
 
 void
-ActuatorEffectivenessThrustVectoringQuadrotor::updateSetpoint(const matrix::Vector<float, NUM_AXES> &control_sp, int matrix_index,
+ActuatorEffectivenessThrustVectoringMultirotor::updateSetpoint(const matrix::Vector<float, NUM_AXES> &control_sp, int matrix_index,
 			    ActuatorVector &actuator_sp){
 
 	actuator_controls_s actuator_controls_0;

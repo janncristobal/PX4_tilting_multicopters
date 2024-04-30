@@ -182,6 +182,7 @@ set(models
 	NDT_tilting
 	baby_k
 	tv_drone1
+	NDT_tilting_quad
 	#*** END-CUSTOM
 )
 

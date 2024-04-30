@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# @name tv drone 1
+# @name NDT Tilting quad
 #
 # @type Tilting Multirotor
 # @class Copter
@@ -9,10 +9,6 @@
 # @output MAIN2 motor 2
 # @output MAIN3 motor 3
 # @output MAIN4 motor 4
-# @output MAIN6 motor 925003_
-# @output MAIN6 motor 10
-# @output MAIN6 motor 11
-# @output MAIN6 motor 12
 #
 # @output AUX1 motor 1
 # @output AUX2 motor 2
@@ -28,36 +24,34 @@
 param set-default MAV_TYPE 14
 
 param set-default SYS_CTRL_ALLOC 1 #dynamic allocation
-param set-default CA_AIRFRAME 11 #Tilting Multirotor
+param set-default CA_AIRFRAME 11 # 12 Thrust Vectoring Multirotor found @ line 157 in ControlAllocator.hpp
 param set-default CA_TILTING_TYPE 1 #Omnidirectional tilting drone
 
 
-# Set all 8 channels
+# Set all 4 channels
 set PWM_OUT 1234
 set PWM_AUX_OUT 1234
 param set-default CA_ROTOR_COUNT 4
 param set-default CA_SV_TL_COUNT 4
 
-param set-default CA_ROTOR0_PX 0.177 #M1 CCW
-param set-default CA_ROTOR0_PY -0.177
+param set-default CA_ROTOR0_PX 0.35 #M1 CW
+param set-default CA_ROTOR0_PY 0.35
 param set-default CA_ROTOR0_PZ 0.05
-param set-default CA_ROTOR0_KM -0.1
+param set-default CA_ROTOR0_KM -0.05
 
-param set-default CA_ROTOR1_PX -0.177 #M2 CCW
-param set-default CA_ROTOR1_PY 0.177
+param set-default CA_ROTOR1_PX -0.35 #M2 CCW
+param set-default CA_ROTOR1_PY 0.35
 param set-default CA_ROTOR1_PZ 0.05
-param set-default CA_ROTOR1_KM -0.1
+param set-default CA_ROTOR1_KM 0.05
 
-param set-default CA_ROTOR2_PX 0.177  #M3 CW
-param set-default CA_ROTOR2_PY 0.177
+param set-default CA_ROTOR2_PX -0.35  #M3 CW
+param set-default CA_ROTOR2_PY -0.35
 param set-default CA_ROTOR2_PZ 0.05
-param set-default CA_ROTOR2_KM 0.1
+param set-default CA_ROTOR2_KM -0.05
 
-param set-default CA_ROTOR3_PX -0.177 #M4 CW
-param set-default CA_ROTOR3_PY -0.177
+param set-default CA_ROTOR3_PX 0.35 #M4 CCW
+param set-default CA_ROTOR3_PY -0.35
 param set-default CA_ROTOR3_PZ 0.05
-param set-default CA_ROTOR3_KM 0.1
-
-
+param set-default CA_ROTOR3_KM 0.05
 
 

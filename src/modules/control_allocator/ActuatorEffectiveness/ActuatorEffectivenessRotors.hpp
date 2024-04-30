@@ -81,8 +81,11 @@ public:
 	// 			    bool tilt_support = false);
 
 	/*** CUSTOM ***/
+	//	ActuatorEffectivenessRotors(ModuleParams *parent, AxisConfiguration axis_config = AxisConfiguration::Configurable,
+	//				    bool tilt_support = false, bool tilting_omnidir = false);
+	// AVL - JC
 	ActuatorEffectivenessRotors(ModuleParams *parent, AxisConfiguration axis_config = AxisConfiguration::Configurable,
-				    bool tilt_support = false, bool tilting_omnidir = false);
+				    bool tilt_support = false, bool tilting_omnidir = false, bool thrust_vectoring = false);
 	/*** CUSOTM ***/
 
 	virtual ~ActuatorEffectivenessRotors() = default;
@@ -100,11 +103,13 @@ public:
 	/*** CUSTOM ***/
 	/**
 	 * @param tilting_omnidir to check if is omnidirectional tilting
+	 * @param thust_vectoring to check if is thrust vectoring AVL-JC
 	 * @param vet_lat to compute a vertical force or lateral force column
 	*/
 	static int computeEffectivenessMatrix(const Geometry &geometry,
 					      EffectivenessMatrix &effectiveness, int actuator_start_index = 0,
 					      bool tilting_omnidir = false,
+						  bool thrust_vectoring = false, // AVL-JC
 					      bool horizontal_matrix = false);
 	/*** END-CUSTOM ***/
 
@@ -145,6 +150,7 @@ private:
 
 	/*** CUSTOM ***/
 	const bool _tilting_omnidir;
+	const bool _thrust_vectoring; // AVL-JC
 	/*** END-CUSTOM ***/
 
 	struct ParamHandles {

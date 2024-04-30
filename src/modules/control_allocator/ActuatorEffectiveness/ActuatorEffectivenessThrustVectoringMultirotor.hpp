@@ -41,11 +41,11 @@
 #include <uORB/topics/actuator_controls.h>
 #include <uORB/Subscription.hpp>
 
-class ActuatorEffectivenessThrustVectoringQuadrotor : public ModuleParams, public ActuatorEffectiveness
+class ActuatorEffectivenessThrustVectoringMultirotor : public ModuleParams, public ActuatorEffectiveness
 {
 public:
-	ActuatorEffectivenessThrustVectoringQuadrotor(ModuleParams *parent);
-	virtual ~ActuatorEffectivenessThrustVectoringQuadrotor() = default;
+	ActuatorEffectivenessThrustVectoringMultirotor(ModuleParams *parent);
+	virtual ~ActuatorEffectivenessThrustVectoringMultirotor() = default;
 
 	bool getEffectivenessMatrix(Configuration &configuration, EffectivenessUpdateReason external_update) override;
 
@@ -59,6 +59,7 @@ public:
 		else{ //Omnidirectional tilting
 			allocation_method_out[0] = AllocationMethod::SEQUENTIAL_DESATURATION;
 			allocation_method_out[1] = AllocationMethod::SEQUENTIAL_DESATURATION;
+			allocation_method_out[2] = AllocationMethod::SEQUENTIAL_DESATURATION; //AVL-JC
 		}
 	}
 
@@ -70,13 +71,14 @@ public:
 		else{ //Omnidirectional tilting
 			normalize[0] = true;
 			normalize[1] = true;
+			normalize[2] = true; //AVL-JC
 		}
 	}
 
 	void updateSetpoint(const matrix::Vector<float, NUM_AXES> &control_sp, int matrix_index,
 			    ActuatorVector &actuator_sp) override;
 
-	const char *name() const override { return "Tilting Multirotor"; }
+	const char *name() const override { return "Thrust Vectoring Multirotor"; } // AVL-JC edited from "Tilting Multirotor"
 
 protected:
 	void updateParams() override;
@@ -84,6 +86,7 @@ protected:
 	ActuatorEffectivenessRotors *_mc_rotors;
 	ActuatorEffectivenessRotors *_mc_rotors_vertical;
 	ActuatorEffectivenessRotors *_mc_rotors_lateral;
+	ActuatorEffectivenessRotors *_mc_rotors_longitudinal; //AVL-JC
 	ActuatorEffectivenessTilts *_tilts;
 
 	param_t _tilting_type_handle;
@@ -95,7 +98,7 @@ protected:
 	bool _tilt_updated{true};
 	int32_t _tilting_type{0};
 
-	static constexpr int NUM_SERVOS_MAX = 5;
+	static constexpr int NUM_SERVOS_MAX = 8; // AVL-JC changed from 5
 	struct ServoParamHandles{
 		param_t angle_min;
 		param_t angle_max;

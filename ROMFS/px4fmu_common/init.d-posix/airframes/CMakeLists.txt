@@ -88,5 +88,6 @@ px4_add_romfs_files(
 	25005_baby_k_interaction
 	25006_koala
 	25007_tv_drone1
+	25008_NDT_tilting_quad
 	#######################
 )
